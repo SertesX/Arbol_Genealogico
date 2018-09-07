@@ -15,7 +15,8 @@ public class Arbol_Genealogico_Lab1_Datos2 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        ArbolG a= new ArbolG();
+        a.setVisible(true);
     }
     
 }
