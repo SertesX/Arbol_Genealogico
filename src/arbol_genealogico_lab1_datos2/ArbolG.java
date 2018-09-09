@@ -5,7 +5,9 @@
  */
 package arbol_genealogico_lab1_datos2;
 
+import java.awt.Color;
 import java.awt.Graphics;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -13,16 +15,21 @@ import javax.swing.JOptionPane;
  * @author danie
  */
 public class ArbolG extends javax.swing.JFrame {
-    
+
     Nodo raiz = new Nodo("raiz");
     Funciones f = new Funciones();
-    
+    int selec = 0;
+    int anchoselec = 0;
+    int altoselec = 0;
+    int nivelselec = 0;
+    String nomselec = "";
+    ArrayList<Coornod> cn = new ArrayList<Coornod>();
+
     /**
      * Creates new form ArbolG
      */
     public ArbolG() {
         initComponents();
-        
     }
 
     /**
@@ -36,10 +43,10 @@ public class ArbolG extends javax.swing.JFrame {
 
         CrearArbol = new javax.swing.JLabel();
         Arbol = new javax.swing.JPanel();
-        nombretxt = new javax.swing.JTextField();
         AggHijo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(204, 204, 204));
 
         CrearArbol.setText("Crear nuevo arbol ");
         CrearArbol.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -48,15 +55,23 @@ public class ArbolG extends javax.swing.JFrame {
             }
         });
 
+        Arbol.setBackground(new java.awt.Color(255, 255, 255));
+        Arbol.setPreferredSize(new java.awt.Dimension(500, 300));
+        Arbol.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ArbolMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout ArbolLayout = new javax.swing.GroupLayout(Arbol);
         Arbol.setLayout(ArbolLayout);
         ArbolLayout.setHorizontalGroup(
             ArbolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 525, Short.MAX_VALUE)
+            .addGap(0, 500, Short.MAX_VALUE)
         );
         ArbolLayout.setVerticalGroup(
             ArbolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 321, Short.MAX_VALUE)
+            .addGap(0, 300, Short.MAX_VALUE)
         );
 
         AggHijo.setText("Agregar hijo");
@@ -70,21 +85,19 @@ public class ArbolG extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(78, 78, 78)
-                .addComponent(Arbol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(297, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(599, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(AggHijo)
-                        .addGap(53, 53, 53)
-                        .addComponent(nombretxt, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(CrearArbol)
                         .addGap(211, 211, 211))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(84, 84, 84)
+                .addComponent(Arbol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -92,27 +105,120 @@ public class ArbolG extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(CrearArbol, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(4, 4, 4)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nombretxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(AggHijo, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
+                .addComponent(AggHijo, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
                 .addComponent(Arbol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(89, Short.MAX_VALUE))
+                .addContainerGap(99, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void CrearArbolMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CrearArbolMouseClicked
-        raiz.nombre = JOptionPane.showInputDialog("Escriba el nombre del padre");
-        Graphics g = Arbol.getGraphics();
+        String nomraiz = JOptionPane.showInputDialog("Escriba el nombre del padre");
+        if (!nomraiz.isEmpty()) {
+            raiz.nombre = nomraiz;
+            int AnchoPanel = Arbol.getWidth();
+            int AltoPanel = Arbol.getHeight();
+            Graphics g = Arbol.getGraphics();
+            g.drawRect((AnchoPanel / 2) - 25, 50, 50, 20);
+            Coornod c = new Coornod(nomraiz, (AnchoPanel / 2) - 25, 50);
+            cn.add(c);
+            g.drawString(nomraiz, (AnchoPanel / 2) - 25 + 2, 62);
+        }
     }//GEN-LAST:event_CrearArbolMouseClicked
 
     private void AggHijoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AggHijoMouseClicked
-        if(!nombretxt.getText().isEmpty()){
-            raiz=f.insertar(raiz, "raul", nombretxt.getText());
+        if (selec == 1) {
+            int AnchoPanel = Arbol.getWidth();
+            String nombre = JOptionPane.showInputDialog("Escriba el nombre del hijo");
+            if (!nombre.isEmpty()) {
+                String nompadre = nomselec;
+                Nodo padre = f.buscar(raiz, nompadre);
+                if (padre.derecho == null || padre.izquierdo == null) {
+                    f.insertar(raiz, nompadre, nombre);
+                    padre = f.buscar(raiz, nompadre);
+                    Graphics g = Arbol.getGraphics();
+                    if (padre.derecho != null && ((padre.derecho).nombre).equals(nombre)) {
+                        int k = 1;
+                        for (int i = 0; i < nivelselec; i++) {
+                            k = k * 2;
+                        }
+                        k = k * 2;
+                        k = AnchoPanel / k;
+                        g.drawRect(anchoselec + k - 25, altoselec + 50, 50, 20);
+                        g.drawLine(anchoselec, altoselec + 20, anchoselec + k, altoselec + 50);
+                        Coornod c = new Coornod(nombre, anchoselec + k - 25, altoselec + 50);
+                        g.drawString(nombre, c.x + 2, c.y + 12);
+                        System.out.println(nombre);
+                        cn.add(c);
+                    } else {
+                        if (padre.izquierdo != null && ((padre.izquierdo).nombre).equals(nombre)) {
+                            int k = 1;
+                            for (int i = 0; i < nivelselec; i++) {
+                                k = k * 2;
+                            }
+                            k = k * 2;
+                            k = AnchoPanel / k;
+                            g.drawRect(anchoselec - k - 25, altoselec + 50, 50, 20);
+                            g.drawLine(anchoselec, altoselec + 20, anchoselec - k, altoselec + 50);
+                            Coornod c = new Coornod(nombre, anchoselec - k - 25, altoselec + 50);
+                            g.drawString(nombre, c.x + 2, c.y + 12);
+                            cn.add(c);
+                        }
+                    }
+                }
+            }
         }
     }//GEN-LAST:event_AggHijoMouseClicked
+
+    private void ArbolMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ArbolMouseClicked
+        int AnchoPanel = Arbol.getWidth();
+        int AltoPanel = Arbol.getHeight();
+        int AnchoPanelClick = evt.getX();
+        int AltoPanelClick = evt.getY();
+        Graphics g = Arbol.getGraphics();
+        int sw = 0;
+        int n = 2;
+        int m = 1;
+        while (sw == 0 && m < 20) {
+            int k = 1;
+            for (int i = 0; i < m; i++) {
+                k = k * 2;
+            }
+            for (int i = 0; i < k; i++) {
+                if ((AnchoPanelClick > ((AnchoPanel / n) * (i + 1)) - 25) && (AnchoPanelClick < ((AnchoPanel / n) * (i + 1)) + 25) && AltoPanelClick > 50 * m && AltoPanelClick < 50 * m + 50) {
+                    for (Coornod c : cn) {
+                        g.setColor(Color.white);
+                        g.fillRect(c.x, c.y, 50, 20);
+                        g.setColor(Color.black);
+                        g.drawRect(c.x, c.y, 50, 20);
+                        g.drawString(c.nombre, c.x + 2, c.y + 12);
+                    }
+                    Color naranja = new Color(255, 204, 102);
+                    g.setColor(naranja);
+                    g.fillRect(((AnchoPanel / n) * (i + 1)) - 25, 50 * m, 50, 20);
+                    sw = 1;
+                    for (Coornod c : cn) {
+                        if (c.x < AnchoPanelClick && c.x + 50 > AnchoPanelClick && c.y < AltoPanelClick && c.y + 50 > AltoPanelClick) {
+                            g.setColor(Color.black);
+                            g.drawString(c.nombre, c.x + 2, c.y + 12);
+                            nomselec = c.nombre;
+                            System.out.println(nomselec);
+                        }
+                    }
+                    ;
+                    anchoselec = (AnchoPanel / n) * (i + 1);
+                    altoselec = 50 * m;
+                    nivelselec = m;
+                    selec = 1;
+                    i = k + 1;
+                }
+            }
+            m = m + 1;
+            n = n * 2;
+        }
+    }//GEN-LAST:event_ArbolMouseClicked
 
     /**
      * @param args the command line arguments
@@ -153,6 +259,5 @@ public class ArbolG extends javax.swing.JFrame {
     private javax.swing.JLabel AggHijo;
     private javax.swing.JPanel Arbol;
     private javax.swing.JLabel CrearArbol;
-    private javax.swing.JTextField nombretxt;
     // End of variables declaration//GEN-END:variables
 }
