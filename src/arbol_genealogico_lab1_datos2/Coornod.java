@@ -19,4 +19,5 @@ public class Coornod {
         x=xx;
         y=yy;
     }
+    
 }

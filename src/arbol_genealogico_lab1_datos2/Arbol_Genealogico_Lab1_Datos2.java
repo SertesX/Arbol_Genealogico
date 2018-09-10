@@ -17,6 +17,7 @@ public class Arbol_Genealogico_Lab1_Datos2 {
     public static void main(String[] args) {
         ArbolG a= new ArbolG();
         a.setVisible(true);
+        a.setLocationRelativeTo(null);
     }
     
 }
